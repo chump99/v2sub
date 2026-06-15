@@ -33,6 +33,9 @@ api.get('/status', (req, res) => {
     return res.status(200).send('后端正常')
 })
 
+import auth from './auth.js'
+api.use('/auth', auth)
+
 import { createServer, get } from 'node:http'
 import { httpServerHandler } from 'cloudflare:node'
 const server = createServer(app)
