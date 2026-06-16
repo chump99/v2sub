@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 
-defineProps({
+const prop = defineProps({
     show: {
         type: Boolean,
         required: true
@@ -16,9 +16,16 @@ defineProps({
     }
 })
 
-defineEmits(['save', 'cancel'])
+const emit = defineEmits(['save', 'close'])
+
+const handleClose = done => {
+    done()
+    emit('close')
+}
 </script>
 
-<template></template>
+<template>
+    <el-dialog :model-value="prop.show" title="源编辑器" width="90%" :before-close="handleClose" align-center></el-dialog>
+</template>
 
 <style scoped></style>

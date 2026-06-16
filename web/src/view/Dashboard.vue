@@ -108,7 +108,7 @@ onMounted(fetchSubNames)
                 <span>没有数据</span>
             </template>
         </el-table>
-        <SourceEditor :show="showEditor" :data="sourceData" :loading="loading" @cancel="closeEditor" @save="saveSource" />
+        <SourceEditor :show="showEditor" :data="sourceData" :loading="loading" @close="closeEditor" @save="saveSource" />
     </div>
 </template>
 
