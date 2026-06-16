@@ -45,13 +45,41 @@ const fetchSubNames = async () => {
     }
 }
 
-const addSource = async () => {}
+const addSource = () => {
+    Object.assign(sourceData, {
+        name: '',
+        url: '',
+        exclude: ''
+    })
+
+    openEditor()
+}
 
 const editSource = async idx => {}
 
 const deleteSource = async idx => {}
 
-const saveSource = async () => {}
+const saveSource = async () => {
+    try {
+        loading.value = true
+        const res = await axios.post('/api/source/set', sourceData)
+
+        ElMessage.success(res.data)
+        closeEditor()
+    } catch (error) {
+        ElMessage.error(error.response.data)
+    } finally {
+        loading.value = false
+    }
+}
+
+const openEditor = () => {
+    showEditor.value = true
+}
+
+const closeEditor = () => {
+    showEditor.value = false
+}
 
 onMounted(fetchSubNames)
 </script>
@@ -80,7 +108,7 @@ onMounted(fetchSubNames)
                 <span>没有数据</span>
             </template>
         </el-table>
-        <SourceEditor :show="showEditor" :data="sourceData" :loading="loading" @cancel="showEditor = false" @save="saveSource" />
+        <SourceEditor :show="showEditor" :data="sourceData" :loading="loading" @cancel="closeEditor" @save="saveSource" />
     </div>
 </template>
 
