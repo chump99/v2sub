@@ -12,7 +12,7 @@
     },
     "kv_namespaces": [
         {
-            "binding": "v2sub",
+            "binding": "data",
             "id": "1bfaf3b71d0a42afb667f7e00c973026"
         }
     ]
