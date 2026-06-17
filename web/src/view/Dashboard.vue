@@ -213,7 +213,7 @@ onMounted(() => {
             <el-button type="primary" :loading="loading" @click="fetchSubContent">读取内容</el-button>
             <span class="sub-url flex-1">{{ subUrl }}</span>
         </div>
-        <pre><code>{{ checkerData }}</code></pre>
+        <pre>{{ checkerData }}</pre>
     </div>
 </template>
 
