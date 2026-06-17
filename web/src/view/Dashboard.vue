@@ -11,6 +11,7 @@ import SourceEditor from '@/components/SourceEditor.vue'
 const loading = ref(false)
 const showEditor = ref(false)
 const subNames = ref([])
+const checkerData = ref('')
 const router = useRouter()
 
 const sourceData = reactive({
@@ -145,6 +146,31 @@ const setSubSecret = async () => {
     }
 }
 
+const fetchSubInfo = async () => {
+    try {
+        loading.value = true
+        const { secret } = subSecretData
+        const res = await axios.get(`/api/sub/info?secret=${secret}`)
+        checkerData.value = JSON.stringify(res.data)
+    } catch (error) {
+        ElMessage.error(error.response.data)
+    } finally {
+        loading.value = false
+    }
+}
+
+const fetchSubContent = async () => {
+    try {
+        loading.value = true
+        const res = await axios.get(subUrl.value)
+        checkerData.value = res.data
+    } catch (error) {
+        ElMessage.error(error.response.data)
+    } finally {
+        loading.value = false
+    }
+}
+
 onMounted(() => {
     fetchSubNames()
     fetchSubSecret()
@@ -183,10 +209,11 @@ onMounted(() => {
             <el-button type="primary" :loading="loading" @click="setSubSecret">设置</el-button>
         </div>
         <div class="container flex-center">
-            <el-button type="primary" :loading="loading">读取信息</el-button>
-            <el-button type="primary" :loading="loading">读取内容</el-button>
+            <el-button type="primary" :loading="loading" @click="fetchSubInfo">读取信息</el-button>
+            <el-button type="primary" :loading="loading" @click="fetchSubContent">读取内容</el-button>
             <span class="sub-url flex-1">{{ subUrl }}</span>
         </div>
+        <el-input v-model="checkerData" type="textarea" :rows="checkerData.split('\n').length" resize="none" readonly />
     </div>
 </template>
 
